@@ -1,1 +1,4 @@
-# MCOC2021-P3-Grupo10
+# Grupo10
+# Integrantes:
+# George Chammas
+# Vicente Otaegui
