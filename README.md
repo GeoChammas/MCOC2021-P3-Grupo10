@@ -1,4 +1,4 @@
-# Grupo10
+# Grupo 10
 # Integrantes:
 # George Chammas
 # Vicente Otaegui
