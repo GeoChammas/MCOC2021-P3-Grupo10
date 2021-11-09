@@ -1,6 +1,7 @@
 # Grupo 10
 ## Integrantes:
-George Chammas
+George Chammas \n
+
 Vicente Otaegui
 
 
@@ -12,7 +13,7 @@ Para esta entrega, se trabajó con la siguiente red
 
 ![fig1](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Entrega%202/fig1.png)
 
-En donde los diferentes colores de los arcos a diferentes velocidades máximas a las que se puede viajar. 
+En donde los diferentes colores de los arcos corresponden a diferentes velocidades máximas a las que se puede viajar. 
 
 El objetivo de esta entrega fue encontrar la ruta mínima (con tiempo de viaje mínimo) para realizar tres viajes independientes: de 0 a 9, de 4 a 5 y de 0 a 4.
 
