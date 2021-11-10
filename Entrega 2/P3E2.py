@@ -37,10 +37,8 @@ G.add_edge("5","7", tiempo = np.sqrt((0-5)**2 + (10-8)**2)/120)
 G.add_edge("7","9", tiempo = np.sqrt((5-8)**2 + (8-10)**2)/60)
 G.add_edge("8","9", tiempo = np.sqrt((9-8)**2 + (7-10)**2)/60)
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 9151e8cfae2e2b04203a66171d0f85a6964da1c3
+
 # Coordenadas de los nodos
 pos = nx.get_node_attributes(G, "pos")
 
