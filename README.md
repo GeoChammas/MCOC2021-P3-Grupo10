@@ -31,7 +31,7 @@ A continuación, se presentan las rutas mínimas para cada uno de los tres viaje
 
 ## Integrante: George Chammas
 
-![Zona 312 Las Condes](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Zona%20312%20Las%20Condes.png)
+![Zona 312 Las Condes George Chammas](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Zona%20312%20Las%20Condes%20George%20Chammas.png)
 
 
 ## Integrante: Vicente Otaegui
