@@ -25,3 +25,13 @@ A continuación, se presentan las rutas mínimas para cada uno de los tres viaje
 ![fig3](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Entrega%202/fig3.png)
 
 ![fig4](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Entrega%202/fig4.png)
+
+
+# Entrega 3
+
+## Integrante: George Chammas
+
+![Zona 312 Las Condes](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Zona%20312%20Las%20Condes.png)
+
+
+## Integrante: Vicente Otaegui
