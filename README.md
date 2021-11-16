@@ -47,7 +47,7 @@ Para esta entrega, el objetivo fue encontrar el equilibrio de Wardrop de la sigu
 
 Se puede notar que cada arco tiene una función, la cual corresponde al costo de cada uno. Este depende del parámetro f correspondiente al flujo en el arco.
 
-Además, a continuación se presentan la matriz origen-destino, correspondientes a la cantidad de viajes (demanda) que se quieren realizar entre cada par OD.
+Además, a continuación se presenta la matriz origen-destino, correspondiente a la cantidad de viajes (demanda) que se quieren realizar entre cada par OD.
 
 ```python
 OD = {
@@ -111,7 +111,7 @@ Al finalizar este algoritmo, se graficó la red con los flujos y costos asignado
 
 
 
-Al tener todos los flujos y costos asignados, lo único que falta es verificar que se cumple el equilibrio de Wardrop. Para esto, para cada par origen-destino, se encontró su ruta mínima usando dijkstra_path y se recorrieron todos los arcos de esta ruta, sumando los costos de cada uno para encontrar el costo total de la ruta mínima. Entonces, así, ya se tienen los costos de todas las rutas mínimas de todos los pares OD. El problema es que para un par OD podrían haber varias rutas mínimas, todas con el mismo costo (el mínimo posible), pero la función dijkstra_path solo entrega una ruta mínima, y no todas. Para encontrar el resto de la rutas mínimas, se utilizó la función nx.all_simple_paths, la cual entrega una lista con todas las posibles rutas entre un par OD. Luego, se recorrieron los arcos de todas estas rutas, al igual que lo realizado para el dijkstra_path, sumando los costos de todos los arcos para encontrar el costo total de cada ruta. Teniendo estos costos, se compararon con los obtenidos con el dijkstra_path, los cuales corresponden a los mínimos. Se consideraron rutas mínimas todas las que tienen costos con una diferencia menor al 1% con respecto al costo mínimo. Así, se aseguró que se cumple el equilibrio de Wardrop, no perfectamente, pero sí con una tolerancia menor al 1%. 
+Al tener todos los flujos y costos asignados, lo único que falta es verificar que se cumple el equilibrio de Wardrop. Para esto, para cada par origen-destino, se encontró su ruta mínima usando dijkstra_path y se recorrieron todos los arcos de esta ruta, sumando los costos de cada uno para encontrar el costo total de la ruta mínima. Entonces, así, ya se tienen los costos de todas las rutas mínimas de todos los pares OD. El problema es que, para un par OD, podrían haber varias rutas mínimas, todas con el mismo costo (el mínimo posible), pero la función dijkstra_path solo entrega una ruta mínima, y no todas. Para encontrar el resto de la rutas mínimas, se utilizó la función nx.all_simple_paths, la cual entrega una lista con todas las posibles rutas entre un par OD. Luego, se recorrieron los arcos de todas estas rutas, al igual que lo realizado para el dijkstra_path, sumando los costos de todos los arcos para encontrar el costo total de cada ruta. Teniendo estos costos, se compararon con los obtenidos con el dijkstra_path, los cuales corresponden a los mínimos. Se consideraron rutas mínimas todas las que tienen costos con una diferencia menor al 1% con respecto al costo mínimo. Así, se aseguró que se cumple el equilibrio de Wardrop, no perfectamente, pero sí con una error menor al 1%. 
 
 Todo lo que se acaba de explicar, se realizó con el siguiente código.
 
@@ -146,7 +146,7 @@ for key in OD:
     costos.append(costo_minimo)
 ```
 
-Para cada par OD, las rutas mínimas encontradas y sus costos se agregan a las listas parOD, rutas_minimas y costos, las cuales se usan para armar la tabla con los resultados finales que se muestra a continuación, utilizando el siguiente código.
+Para cada par OD, las rutas mínimas encontradas y sus costos se agregaron a las listas parOD, rutas_minimas y costos, las cuales se usan para armar la tabla con los resultados finales que se muestra a continuación, utilizando el siguiente código.
 
 ```python
 table = {
