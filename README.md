@@ -36,7 +36,7 @@ A continuación, se presentan las rutas mínimas para cada uno de los tres viaje
 
 ## Integrante: Vicente Otaegui
 
-Sin Entrega
+![Zona 333 Lo Barnechea Vicente Otaegui] https://github.com/VicenteOtaegui/MCOC2021-P3-Grupo10/blob/main/Zona%20333%20Lo%20Barnechea%20Vicente%20Otaegui.png
 
 
 # Entrega 4
