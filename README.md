@@ -158,3 +158,127 @@ print(tabulate(table, headers='keys', tablefmt='fancy_grid'))
 
 
 ![Tabla Final](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Entrega%204/Tabla%20Final.png)
+
+# Entrega 5
+
+Esta entrega tiene como objetivo producir un grafo y una matriz OD para todos los pares OD que utilizan la avenida Américo Vespucio Oriente como parte de su ruta. Para esto, se implementaron tres códigos.
+
+
+## Código 1: P3E5_save
+
+Este archivo busca el mapa de Santiago en internet, según las latitudes y longitudes entregadas, y lo guarda en formato .gpickle. Cabe destacar que se le indica que solo considere los highways que son motorways, primar, secondary, tertiary y construction (el cual contiene a AVO, que después se pasa a motorway).
+
+
+## Código 2: P3E5
+
+Este archivo abre el mapa guardado como .gpickle, las zonas en eod.json y la matriz OD en mod.csv. Con estos datos, se recorre sobre la matriz OD, encontrando todos los pares OD que usen AVO, guardándolos en un nuevo archivo csv (OD_reducida.csv). Así, se gana eficiencia porque ahora trabajamos con una matriz más pequeña que solo incluye los datos necesarios.
+
+
+## Código 3: P3E5_ver
+
+Este archivo abre OD_reducida.csv, genera la matriz y la recorre agregando las zonas a una lista para luego ser graficadas en gris. Además, grafica solo los highways que se encuentran en las zonas seleccionadas según los colores indicados en el enunciado y la avenida AVO en rojo.
+
+
+A continuación, se presenta el grafo obtenido con las zonas de interés en gris y la avenida Américo Vespucio Oriente destacada en rojo.
+
+
+![AVO](https://github.com/GeoChammas/MCOC2021-P3-Grupo10/blob/main/Entrega%205/AVO.png)
+
+
+## Preguntas
+
+### ¿Cómo seleccionó las zonas a incluir?
+
+En el segundo archivo de código, se recorrió la matriz OD, se tomaron los nodos más cercanos a los representative points de la zona origen y de la destino y se utilizó la función nx.all_shortest_paths, que entrega todas las rutas más cortas entre dos nodos. Luego, para cada una de esas rutas, se recorrieron sus arcos y se vio si es que alguno correspondía a AVO. Si es que AVO sí se encontraba, entonces se agregaban las zonas origen y destino a una lista, si no, se seguía con el programa. Así, se armó una lista con todas las zonas pertinentes que usan AVO como parte de su ruta. A continuación, se presenta esta parte del código donde se realiza lo explicado.
+
+
+```python
+zonas_avo = []
+
+for key in OD:
+    zona_origen = key[0]
+    zona_destino = key[1]
+
+    
+    #Representative Point Origen
+    p = zonas_gdf[zonas_gdf.ID==zona_origen].representative_point()
+    try:
+        cx_zona_origen, cy_zona_origen = float(p.x), float(p.y)
+    except:
+        try:
+            cx_zona_origen, cy_zona_origen = float(zonas_gdf[zonas_gdf.ID==zona_origen].centroid.x), float(zonas_gdf[zonas_gdf.ID==zona_origen].centroid.y)
+        except:
+            print("No hay punto")
+
+    distancia_minima = np.infty
+
+    for i, node in enumerate(G.nodes):
+        cx_nodo = G.nodes[node]["x"]
+        cy_nodo = G.nodes[node]["y"]
+        
+        dist_nodo = np.sqrt((cx_nodo-cx_zona_origen)**2 + (cy_nodo-cy_zona_origen)**2)
+        
+        if dist_nodo < distancia_minima:
+            distancia_minima = dist_nodo
+            nodo_origen = node
+
+
+    #Representative Point Origen
+    p = zonas_gdf[zonas_gdf.ID==zona_destino].representative_point()
+    try:
+        cx_zona_destino, cy_zona_destino = float(p.x), float(p.y)
+    except:
+        try:
+            cx_zona_destino, cy_zona_destino = float(zonas_gdf[zonas_gdf.ID==zona_destino].centroid.x), float(zonas_gdf[zonas_gdf.ID==zona_destino].centroid.y)
+        except:
+            print("No hay punto")
+    
+    distancia_minima = np.infty
+
+    for i, node in enumerate(G.nodes):
+        cx_nodo = G.nodes[node]["x"]
+        cy_nodo = G.nodes[node]["y"]
+        
+        dist_nodo = np.sqrt((cx_nodo-cx_zona_destino)**2 + (cy_nodo-cy_zona_destino)**2)
+        
+        if dist_nodo < distancia_minima:
+            distancia_minima = dist_nodo
+            nodo_destino = node
+    
+    try:    
+        path = list(nx.all_shortest_paths(G, nodo_origen, nodo_destino, weight = costo))
+        for i in path:
+            Nparadas = len(i)
+            for parada in range(Nparadas-1):
+                n1 = i[parada]
+                n2 = i[parada+1]
+                tomar_arco = 0
+                arco = G.edges[n1, n2, tomar_arco]
+                
+                if "name" in arco:    
+                    name = str(arco["name"])
+                else:
+                    name = ""
+                
+                if name.find("Autopista Vespucio Oriente") >=0:
+                    zonas_avo.append(zona_origen)
+                    zonas_avo.append(zona_destino)
+                    
+    except:
+        print(f"No hay rutas entre {nodo_origen} y {nodo_destino}")
+```
+
+
+### ¿Cuántas zonas quedaron seleccionadas son?
+
+Quedaron seleccionadas 487 zonas en total.
+
+
+### ¿Cuántos viajes deberá asignar?
+
+Se sumaron todas las demandas de de los pares OD seleccionados (los que se encuentran en la matriz OD reducida), llegando a un total de 436895.6647284921 viajes totales que se deberá asignar.
+
+
+### ¿Cuales son los pares OD que espera Ud. que generen mayor flujo en AVO?
+
+Creemos que las zonas que más usarán AVO, y por tanto generar el mayor flujo, son las que usan la avenida completa, provocando mayor congestión a lo largo de AVO. Estas corresponden a las que se encuentran al inicio y al final de la avenida. Las que están al inicio: 281, 282, 433, 434, 435. Las que están al final: 144, 145, 153, 578, 579, 580. Los viajes entre estas zonas deberían ser las que generan mayor flujo en AVO.
